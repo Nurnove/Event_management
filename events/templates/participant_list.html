@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Participants</h1>
+
+<a href="{% url 'participant_create' %}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Add Participant</a>
+
+<table class="w-full bg-white shadow rounded">
+  <thead>
+    <tr class="bg-gray-200">
+      <th class="p-2 text-left">Name</th>
+      <th class="p-2 text-left">Email</th>
+      <th class="p-2 text-left">Events</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in participants %}
+    <tr>
+      <td class="p-2">{{ p.name }}</td>
+      <td class="p-2">{{ p.email }}</td>
+      <td class="p-2">
+        {% for e in p.event.all %}
+          <span class="text-sm">{{ e.name }}</span>{% if not forloop.last %}, {% endif %}
+        {% empty %}None{% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

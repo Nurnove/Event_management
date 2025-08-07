@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">{{ event.name }}</h1>
+
+<div class="bg-white p-4 rounded shadow">
+  <p><strong>Description:</strong> {{ event.description }}</p>
+  <p><strong>Date:</strong> {{ event.date }}</p>
+  <p><strong>Time:</strong> {{ event.time }}</p>
+  <p><strong>Location:</strong> {{ event.location }}</p>
+  <p><strong>Category:</strong> {{ event.category.name }}</p>
+
+  <h2 class="text-lg mt-4 font-semibold">Participants:</h2>
+  <ul class="list-disc ml-6">
+    {% for p in event.Participants.all %}
+      <li>{{ p.name }} ({{ p.email }})</li>
+    {% empty %}
+      <li>No participants yet.</li>
+    {% endfor %}
+  </ul>
+
+  <div class="flex  space-x-2">
+   <div class="mt-2">
+    <a href="{% url 'event_update' event.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1  rounded shadow">
+    Edit
+  </a>
+   </div>
+   <div>
+    <form action="{% url 'event_delete' event.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 mt-1 rounded shadow">
+      Delete
+    </button>
+  </form> </div>
+  </div>
+</div>
+{% endblock %}
