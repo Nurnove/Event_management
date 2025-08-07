@@ -105,8 +105,17 @@ def dashboard(request):
     return render(request, 'dashboard.html',context)
 
 
-         
-    
+
+def add_category(request):
+    form = CategoryForm()
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Category added successfully.")
+            return redirect('event_create')
+    return render(request, "category_form.html", {"form": form})
+   
     
 
 # Create your views here.

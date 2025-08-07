@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    path('category/create/', add_category, name='add_category'),
     path('<int:id>/',event_detail, name='event_detail'),
     path('create/', event_create, name='event_create'),
     path('update/<int:id>/', event_update, name='event_update'),
