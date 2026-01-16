@@ -1,11 +1,17 @@
 from django import forms
-from events.models import Event,Participant,Category
+from events.models import Event,Category
 from django.forms import TimeInput
 
 class StyledFormMixin:
     """ Mixing to apply style to form field"""
+    
 
     default_classes = "border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styled_widgets()
+
 
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
@@ -39,7 +45,7 @@ class StyledFormMixin:
 class EventForm(StyledFormMixin,forms.ModelForm):
     class Meta:
         model=Event
-        fields='__all__'
+        fields = ["name","description","date","time","location","category","image"]
 
         widgets = {
             'date': forms.SelectDateWidget,
@@ -50,26 +56,20 @@ class EventForm(StyledFormMixin,forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
 
-class ParticipantForm(StyledFormMixin,forms.ModelForm):
-    class Meta:
-        model=Participant
-        fields='__all__'
+# class ParticipantForm(StyledFormMixin,forms.ModelForm):
+#     class Meta:
+#         model=Participant
+#         fields='__all__'
 
-        widgets = {
-            'event': forms.CheckboxSelectMultiple
+#         widgets = {
+#             'event': forms.CheckboxSelectMultiple
             
-            }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.apply_styled_widgets()
-
+#             }
+   
 class CategoryForm(StyledFormMixin,forms.ModelForm):
     class Meta:
         model=Category
         fields='__all__'
-    def __init__(self, *arg, **kwarg):
-        super().__init__(*arg, **kwarg)
-        self.apply_styled_widgets()
-
+    
        
 

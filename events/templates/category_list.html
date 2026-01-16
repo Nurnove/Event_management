@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Category List</h1>
+
+        <a href="{% url 'add_category' %}"
+           class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+            + Add New Category
+        </a>
+    </div>
+
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+        <table class="min-w-full border border-gray-200">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">#</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Description</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for category in categories %}
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="px-4 py-3 text-gray-700">
+                        {{ forloop.counter }}
+                    </td>
+                    <td class="px-4 py-3 font-medium text-gray-800">
+                        {{ category.name }}
+                    </td>
+                    <td class="px-4 py-3 text-gray-600">
+                        {{ category.description }}
+                    </td>
+                    <td class="px-4 py-3 flex items-center gap-3">
+                       <form action="{% url 'update_category' category.pk %}" method="get">
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 
+                                      rounded-md text-sm font-medium shadow"> Edit
+                            </button>
+                        </form>
+
+                        <form action="{% url 'delete_category' category.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit"
+                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-6 text-gray-500">
+                        No categories found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

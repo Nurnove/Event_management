@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+    
+    <div class="bg-white shadow rounded-lg p-6">
+        <a href="{% url 'event_list' %}">
+        <h3 class="text-gray-500 text-sm">Total Events</h3>
+        <p class="text-3xl font-bold text-blue-600 mt-2">
+            {{ total_events }}
+        </p>
+        
+        </a>
+    </div>
+
+   
+    <div class="bg-white shadow rounded-lg p-6">
+        <a href="{% url 'category_list' %}" >
+        <h3 class="text-gray-500 text-sm">Total Categories</h3>
+        <p class="text-3xl font-bold text-green-600 mt-2">
+            {{ total_categories }}
+        </p>
+        </a>
+    </div>
+
+    
+    <div class="bg-white shadow rounded-lg p-6">
+        <a href="{% url 'participant_list' %}">
+        <h3 class="text-gray-500 text-sm">Total Participants</h3>
+        <p class="text-3xl font-bold text-purple-600 mt-2">
+            {{ total_participants }}
+        </p>
+        </a>
+    </div>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    
+    
+    <a href="{% url 'event_create' %}">
+        <div class="bg-blue-600 text-white text-center px-5 py-2  hover:bg-orange-700 shadow rounded-lg ">
+            Create Event 
+        </div>    
+    </a>        
+
+    
+    
+    <a href="{% url 'add_category' %}">
+        <div class="bg-red-600 text-white text-center px-5 py-2  hover:bg-green-700 shadow rounded-lg ">
+            Add Category
+        </div>    
+    </a>
+    
+    
+    <a href="{% url 'create_group' %}">
+        <div class="bg-gray-800 text-white text-center px-5 py-2  hover:bg-yellow-700 shadow rounded-lg ">
+            Create Group
+        </div>
+    </a>
+    
+</div>
+
+</div>
+
+{% endblock %}

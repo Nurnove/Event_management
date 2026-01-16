@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Participants</h1>
+<h1 class="text-2xl font-bold mb-4">Users</h1>
 
-<a href="{% url 'participant_create' %}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Add Participant</a>
+{% comment %} <a href="{% url 'participant_create' %}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Add Participant</a> {% endcomment %}
 
 <table class="w-full bg-white shadow rounded">
   <thead>
@@ -10,17 +10,44 @@
       <th class="p-2 text-left">Name</th>
       <th class="p-2 text-left">Email</th>
       <th class="p-2 text-left">Events</th>
+      <th class="p-2 text-left">Role</th>
+      <th class="p-2 text-left">Actions</th>
     </tr>
   </thead>
-  <tbody>
+   <tbody>
     {% for p in participants %}
-    <tr>
-      <td class="p-2">{{ p.name }}</td>
+    <tr class="border-t hover:bg-gray-50">
+      <td class="p-2">{{ p.username }}</td>
       <td class="p-2">{{ p.email }}</td>
+
       <td class="p-2">
-        {% for e in p.event.all %}
+        {% for e in p.events.all %}
           <span class="text-sm">{{ e.name }}</span>{% if not forloop.last %}, {% endif %}
-        {% empty %}None{% endfor %}
+        {% empty %}
+          None
+        {% endfor %}
+      </td>
+      <td class="p-2">{{ p.groups.all.0.name }}</td>
+      
+      <td class="p-2 flex gap-2">
+        <a href="{% url 'assign-role' p.pk %}"
+       class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded text-sm">
+        Assign Role
+        </a>
+        <form action="{% url 'delete_participant' p.pk %}" method="POST">
+          {% csrf_token %}
+          <button type="submit"
+              class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+              Delete
+          </button>
+        </form>
+      </td>
+
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4" class="p-4 text-center text-gray-500">
+        No participants found.
       </td>
     </tr>
     {% endfor %}

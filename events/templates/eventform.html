@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  <div>
+<div>
+  <div class="w-1/2 mx-auto">
     {% if messages %}
       {% for message in messages %}
         <div class="px-2 py-1 {% if message.tags == 'success' %}bg-green-500{% endif %}">
@@ -10,10 +11,10 @@
     {% endif %}
   </div>
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="space-y-4">
-      <h2 class="text-2xl font-bold mb-4">Create Event</h2>
+      <h2 class="text-2xl font-bold flex justify-center items-center mb-4">Create Event</h2>
       {{ form.as_p }}
 
       <button type="submit"
@@ -24,10 +25,12 @@
   </form>
 
   
-  <div class="mt-6 text-sm text-gray-700">
+  {% comment %} <div class="mt-6 text-sm text-gray-700">
     
     <a href="{% url 'add_category' %}" class="text-blue-600 underline" target="_blank">
       Click here to add new category
     </a>
-  </div>
+  </div> {% endcomment %}
+
+</div>
 {% endblock %}

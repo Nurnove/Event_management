@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">My RSVP’d Events</h2>
+
+<div class="grid md:grid-cols-2 gap-4">
+  {% for event in events %}
+    <div class="bg-white p-4 shadow rounded">
+        <img src="{{ event.image.url }}"
+         alt="{{ event.name }}"
+         class="w-full h-48 object-cover rounded mb-3">
+    <h2 class="text-xl font-semibold">{{ event.name }}</h2>
+    <p>{{ event.description }}</p>
+    <p class="text-sm text-gray-500">Category: {{ event.category.name }}</p>
+    <p class="text-sm text-gray-500">Participants: {{ event.participants.count }}</p>
+    </div>
+  {% empty %}
+    <p>You have not RSVP’d to any events yet.</p>
+  {% endfor %}
+</div>
+
+{% endblock content %}
